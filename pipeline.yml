@@ -1,13 +1,26 @@
+resources: 
+- name: animated-spork
+  type: git
+  source:
+    uri: https://github.com/philipwilliamevans/animated-spork.git
+    # private_key: ((github_key))
+    branch: master
 jobs:
-  - name: job-hello-world
-    public: true
-    plan:
-      - task: hello-world
-        config:
-          platform: linux
-          image_resource:
-            type: docker-image
-            source: {repository: busybox}
-          run:
-            path: echo
-            args: [hello world]
+- name: build-animated-spork
+  public: true
+  plan:
+  - get: animated-spork
+    trigger: true
+  - task: build
+    config:
+      platform: linux
+
+      image_resource:
+        type: docker-image
+        source: {repository: java, tag: openjdk-8}
+
+      inputs:
+      - name: animated-spork
+
+      run:
+        path: animated-spork/build.sh
