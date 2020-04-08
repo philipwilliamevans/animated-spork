@@ -1,5 +1,6 @@
 #!/bin/bash
 
 export TERM=${TERM:-dumb}
-cd animated-spork
+cp -r animated-spork jar-files
+cd jar-files
 ./gradlew --no-daemon build
